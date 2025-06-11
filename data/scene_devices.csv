@@ -1,0 +1,14 @@
+SceneID;DeviceID;DesiredStatus
+1;1;ON
+1;4;ON
+1;5;22°C
+2;1;OFF
+2;4;OFF
+2;6;OFF
+2;7;LOCKED
+3;1;DIM_50%
+3;6;DIM_30%
+4;8;ON
+4;9;ARMED
+5;4;BRIGHT
+5;9;ON 
