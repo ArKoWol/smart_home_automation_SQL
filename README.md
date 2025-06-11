@@ -1,121 +1,96 @@
 # Smart Home Automation SQL Database
 
-Проект курсовой работы по разработке базы данных для системы автоматизации умного дома.
+University coursework project for developing a database system for smart home automation with both OLTP and OLAP components.
 
-## Архитектура базы данных
+## Database Architecture
 
-База данных состоит из 8 таблиц в 3NF:
+**OLTP Database**: 8 tables in 3NF
+- Users, Rooms, DeviceTypes, Devices, DeviceStatus, Scenes, SceneDevices, Events
 
-1. **Users** - пользователи системы
-2. **Rooms** - комнаты в доме
-3. **DeviceTypes** - типы устройств
-4. **Devices** - устройства умного дома
-5. **DeviceStatus** - статусы устройств (история)
-6. **Scenes** - сценарии автоматизации
-7. **SceneDevices** - связь сценариев с устройствами
-8. **Events** - события в системе
+**OLAP Database**: Snowflake schema
+- Dimensional model with fact tables, dimensions, and SCD Type 2
 
-## Быстрый запуск
+## Quick Start
 
-### Предварительные требования
-
+### Prerequisites
 - Docker
 - Docker Compose
 
-### Установка и запуск
-
-1. Клонируйте репозиторий:
+### Setup
+1. Clone the repository:
 ```bash
 git clone git@github.com:ArKoWol/smart_home_automation_SQL.git
 cd smart_home_automation_SQL
 ```
 
-2. Запустите контейнеры:
+2. Start containers:
 ```bash
 docker-compose up -d
 ```
 
-3. Дождитесь инициализации базы данных (около 30 секунд)
+3. Wait for database initialization (~30 seconds)
 
-### Доступ к базе данных
-
+### Database Access
 - **PostgreSQL**: localhost:5433
-  - База данных: `smart_home`
-  - Пользователь: `admin`
-  - Пароль: `admin123`
-
 - **PgAdmin**: http://localhost:8080
   - Email: `admin@example.com`
-  - Пароль: `admin123`
+  - Password: `admin123`
 
-## Структура проекта
-
+## Project Structure
 ```
 smart_home_automation_SQL/
-├── docker-compose.yml          # Docker Compose конфигурация
-├── init/                       # SQL скрипты для инициализации
-│   ├── 01_create_tables.sql   # Создание таблиц
-│   └── 02_load_data.sql       # Загрузка данных
-├── data/                      # CSV файлы с данными
-│   ├── users.csv
-│   ├── rooms.csv
-│   ├── device_types.csv
-│   ├── devices.csv
-│   ├── scenes.csv
-│   └── scene_devices.csv
-└── README.md
+├── docker-compose.yml                    # Docker configuration
+├── sql/                                  # SQL scripts directory
+│   ├── oltp/                            # OLTP database scripts
+│   │   ├── 01_create_tables.sql         # Create OLTP tables
+│   │   └── 02_load_data.sql             # Load data into OLTP
+│   └── olap/                            # OLAP database scripts
+│       ├── 01_create_olap_schema.sql    # Create OLAP schema
+│       ├── 02_populate_reference_data.sql # Load reference data
+│       ├── 03_etl_process.sql           # Main ETL process
+│       ├── 03_etl_simple.sql            # Simplified ETL
+│       └── 05_generate_demo_data.sql    # Generate demo data
+├── data/                                # CSV data files
+│   ├── users.csv                        # User data
+│   ├── rooms.csv                        # Room data
+│   ├── device_types.csv                 # Device type data
+│   ├── devices.csv                      # Device data
+│   ├── scenes.csv                       # Scene data
+│   └── scene_devices.csv                # Scene-device relationships
+├── analytical_queries.sql               # Business intelligence queries
+├── ANALYTICAL_QUERIES_DOCUMENTATION.md  # Query documentation
+├── Course work.pbix                     # Power BI report
+└── Smart_Home_Course_Work_Documentation.docx # Project documentation
 ```
 
-## Особенности реализации
+## Features Implemented
+- ✅ **OLTP 3NF Database** (8 tables)
+- ✅ **CSV Data Loading** (rerunnable scripts)
+- ✅ **OLAP Snowflake Schema** (fact tables, dimensions, SCD Type 2)
+- ✅ **ETL Process** (OLTP → OLAP)
+- ✅ **Analytical Queries**
+- ✅ **Power BI Report**
 
-### 1.1 OLTP решение
-- ✅ Логическая схема (ER-диаграмма в Screenshot)
-- ✅ SQL скрипты создания таблиц
-- ✅ Соответствие 3NF
-- ✅ 8 таблиц
-
-### 1.2 Подготовка данных
-- ✅ 6 CSV файлов с тестовыми данными
-- ✅ Отсутствие суррогатных ключей в CSV
-
-### 1.3 Скрипт загрузки данных
-- ✅ SQL скрипт загрузки из CSV
-- ✅ Rerunnable (повторно выполняемый)
-- ✅ Предотвращение перезаписи существующих данных
-
-## Команды управления
-
+## Commands
 ```bash
-# Запуск
+# Start system
 docker-compose up -d
 
-# Остановка
+# Stop system
 docker-compose down
 
-# Просмотр логов
-docker-compose logs
-
-# Подключение к PostgreSQL
+# Connect to database
 docker exec -it smart_home_db psql -U admin -d smart_home
 
-# Перезагрузка данных
-docker-compose down -v && docker-compose up -d
+# Run ETL process
+docker exec -i smart_home_db psql -U admin -d smart_home < sql/olap/03_etl_process.sql
+
+# Run simplified ETL
+docker exec -i smart_home_db psql -U admin -d smart_home < sql/olap/03_etl_simple.sql
 ```
 
-## Примеры запросов
-
-```sql
--- Получить все устройства пользователя
-SELECT d.DeviceName, r.RoomName, dt.TypeName 
-FROM Devices d
-JOIN Rooms r ON d.RoomID = r.RoomID
-JOIN DeviceTypes dt ON d.DeviceTypeID = dt.DeviceTypeID
-WHERE r.UserID = 1;
-
--- Получить устройства в сценарии
-SELECT s.SceneName, d.DeviceName, sd.DesiredStatus
-FROM Scenes s
-JOIN SceneDevices sd ON s.SceneID = sd.SceneID
-JOIN Devices d ON sd.DeviceID = d.DeviceID
-WHERE s.SceneID = 1;
-```
+## Documentation
+- `ANALYTICAL_QUERIES_DOCUMENTATION.md` - Query documentation
+- `Smart_Home_Course_Work_Documentation.docx` - Complete project documentation
+- See `analytical_queries.sql` for business intelligence queries
+- Power BI report available in `Course work.pbix`
