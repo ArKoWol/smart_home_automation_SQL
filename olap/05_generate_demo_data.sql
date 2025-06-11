@@ -1,15 +1,5 @@
--- ======================================================
--- ИСПРАВЛЕННАЯ ГЕНЕРАЦИЯ ДЕМОНСТРАЦИОННЫХ ДАННЫХ ДЛЯ POWER BI
--- ======================================================
-
--- Подключение к OLAP базе
 \c smart_home_olap
 
--- ======================================================
--- 1. ДОПОЛНИТЕЛЬНЫЕ ПОЛЬЗОВАТЕЛИ (SCD Type 2)
--- ======================================================
-
--- Добавляем больше пользователей
 INSERT INTO dim_user (userid, name, email, registrationdate, usertype, city, country, validfrom, validto, iscurrent) VALUES
 (4, 'Alice Johnson', 'alice.johnson@email.com', '2024-01-15', 'Premium', 'San Francisco', 'USA', '2024-01-15 00:00:00', NULL, true),
 (5, 'Mike Wilson', 'mike.wilson@email.com', '2024-02-01', 'Standard', 'Los Angeles', 'USA', '2024-02-01 00:00:00', NULL, true),
@@ -17,11 +7,6 @@ INSERT INTO dim_user (userid, name, email, registrationdate, usertype, city, cou
 (7, 'Tom Brown', 'tom.brown@email.com', '2024-03-01', 'Trial', 'Portland', 'USA', '2024-03-01 00:00:00', NULL, true),
 (8, 'Lisa Garcia', 'lisa.garcia@email.com', '2024-03-15', 'Standard', 'Denver', 'USA', '2024-03-15 00:00:00', NULL, true);
 
--- ======================================================
--- 2. ДОПОЛНИТЕЛЬНЫЕ КОМНАТЫ
--- ======================================================
-
--- Добавляем комнаты для новых пользователей (правильные имена колонок)
 INSERT INTO dim_room (roomid, userkey, roomname, roomtype, area_sqm, floor, haswindows) 
 SELECT 
     ROW_NUMBER() OVER () + 100 as roomid,
@@ -44,11 +29,7 @@ CROSS JOIN (
 ) AS room_data(roomname, roomtype, area_sqm, floor, haswindows)
 WHERE u.userid IN (4, 5, 6, 7, 8) AND u.iscurrent = true;
 
--- ======================================================
--- 3. ДОПОЛНИТЕЛЬНЫЕ УСТРОЙСТВА
--- ======================================================
 
--- Добавляем разнообразные устройства
 INSERT INTO dim_device (deviceid, roomkey, devicetypekey, manufacturerkey, devicename, model, installationdate, warrantyexpiry, status)
 SELECT 
     ROW_NUMBER() OVER () + 1000 as deviceid,
@@ -74,13 +55,9 @@ CROSS JOIN (
     (4, 9, 'Smart Plug', 'Alexa Smart Plug', '2024-02-20', '2026-02-20'),
     (5, 10, 'Smart TV', 'Samsung QLED', '2024-02-25', '2026-02-25')
 ) AS device_data(devicetypekey, manufacturerkey, devicename, model, installationdate, warrantyexpiry)
-WHERE r.roomkey <= 20; -- Ограничиваем количество
+WHERE r.roomkey <= 20;
 
--- ======================================================
--- 4. ДОПОЛНИТЕЛЬНЫЕ СЦЕНАРИИ
--- ======================================================
 
--- Добавляем разнообразные сценарии (правильные имена колонок)
 INSERT INTO dim_scene (sceneid, userkey, scenename, category, description, isactive)
 SELECT 
     ROW_NUMBER() OVER () + 100 as sceneid,
@@ -102,19 +79,14 @@ CROSS JOIN (
 ) AS scene_data(scenename, category, description)
 WHERE u.iscurrent = true;
 
--- ======================================================
--- 5. BRIDGE TABLE - СВЯЗИ СЦЕНАРИЙ-УСТРОЙСТВО
--- ======================================================
 
--- Удаляем старые связи и создаем новые (правильные имена колонок)
 DELETE FROM bridge_scene_device;
 
--- Создаем реалистичные связи между сценариями и устройствами
 INSERT INTO bridge_scene_device (scenekey, devicekey, devicegroupkey, desiredstatus, priority)
 SELECT 
     s.scenekey,
     d.devicekey,
-    1 as devicegroupkey, -- Используем группу по умолчанию
+    1 as devicegroupkey,
     CASE 
         WHEN s.scenename = 'Good Night' THEN 'OFF'
         WHEN s.scenename = 'Good Morning' THEN 'ON'
@@ -124,33 +96,20 @@ SELECT
     END as desiredstatus,
     ROW_NUMBER() OVER (PARTITION BY s.scenekey ORDER BY d.devicekey) as priority
 FROM dim_scene s
-JOIN dim_device d ON true  -- Cartesian join для создания связей
+JOIN dim_device d ON true
 WHERE 
-    -- Good Morning: освещение + термостат
     (s.scenename = 'Good Morning' AND (d.devicename LIKE '%Light%' OR d.devicename LIKE '%Thermostat%'))
-    -- Good Night: все устройства кроме безопасности
     OR (s.scenename = 'Good Night' AND d.devicename NOT LIKE '%Camera%' AND d.devicename NOT LIKE '%Smoke%')
-    -- Movie Time: освещение + TV + звук
     OR (s.scenename = 'Movie Time' AND (d.devicename LIKE '%Light%' OR d.devicename LIKE '%TV%' OR d.devicename LIKE '%Speaker%'))
-    -- Away Mode: безопасность + замки
     OR (s.scenename = 'Away Mode' AND (d.devicename LIKE '%Camera%' OR d.devicename LIKE '%Lock%' OR d.devicename LIKE '%Sensor%'))
-    -- Dinner Time: освещение + музыка
     OR (s.scenename = 'Dinner Time' AND (d.devicename LIKE '%Light%' OR d.devicename LIKE '%Speaker%'))
-    -- Work Mode: офисные устройства
     OR (s.scenename = 'Work Mode' AND d.devicename LIKE '%Light%')
-    -- Party Mode: все развлекательные устройства
     OR (s.scenename = 'Party Mode' AND (d.devicename LIKE '%Light%' OR d.devicename LIKE '%Speaker%' OR d.devicename LIKE '%TV%'))
-    -- Energy Saver: термостат + выключатели
     OR (s.scenename = 'Energy Saver' AND (d.devicename LIKE '%Thermostat%' OR d.devicename LIKE '%Switch%' OR d.devicename LIKE '%Plug%'));
 
--- ======================================================
--- 6. ГЕНЕРАЦИЯ ФАКТОВЫХ ДАННЫХ - ИСПОЛЬЗОВАНИЕ УСТРОЙСТВ
--- ======================================================
 
--- Удаляем старые данные
 DELETE FROM fact_device_usage;
 
--- Генерируем реалистичные данные использования устройств за последние 3 месяца
 INSERT INTO fact_device_usage (
     datekey, devicekey, userkey, roomkey, 
     totalactivations, totalusageminutes, energyconsumption_kwh, 
@@ -161,7 +120,7 @@ SELECT
     d.devicekey,
     u.userkey,
     r.roomkey,
-    -- Случайные, но реалистичные значения активаций
+
     CASE 
         WHEN dt.typename = 'Lighting' THEN (RANDOM() * 20 + 5)::INTEGER
         WHEN dt.typename = 'Climate Control' THEN (RANDOM() * 10 + 2)::INTEGER
@@ -170,7 +129,6 @@ SELECT
         ELSE (RANDOM() * 12 + 2)::INTEGER
     END as totalactivations,
     
-    -- Время использования
     CASE 
         WHEN dt.typename = 'Lighting' THEN (RANDOM() * 300 + 60)::INTEGER
         WHEN dt.typename = 'Climate Control' THEN (RANDOM() * 1200 + 600)::INTEGER
@@ -179,7 +137,6 @@ SELECT
         ELSE (RANDOM() * 120 + 30)::INTEGER
     END as totalusageminutes,
     
-    -- Потребление энергии
     CASE 
         WHEN dt.typename = 'Lighting' THEN ROUND((RANDOM() * 2 + 0.5)::NUMERIC, 3)
         WHEN dt.typename = 'Climate Control' THEN ROUND((RANDOM() * 15 + 5)::NUMERIC, 3)
@@ -200,17 +157,13 @@ WHERE
     dd.date >= '2024-01-01' 
     AND dd.date <= '2024-11-30'
     AND u.iscurrent = true
-    AND (RANDOM() > 0.3) -- 70% вероятность использования в день
-    AND dd.dayofyear % 7 BETWEEN 1 AND 5; -- Больше активности в будние дни
+    AND (RANDOM() > 0.3)
+    AND dd.dayofyear % 7 BETWEEN 1 AND 5;
 
--- ======================================================
--- 7. ГЕНЕРАЦИЯ ФАКТОВЫХ ДАННЫХ - ВЫПОЛНЕНИЕ СЦЕНАРИЕВ
--- ======================================================
 
--- Удаляем старые данные
+
 DELETE FROM fact_scene_execution;
 
--- Генерируем данные выполнения сценариев
 INSERT INTO fact_scene_execution (
     datekey, timekey, scenekey, userkey,
     executioncount, successfulexecutions, failedexecutions,
@@ -221,7 +174,6 @@ SELECT
     dt.timekey,
     s.scenekey,
     s.userkey,
-    -- Количество выполнений
     CASE 
         WHEN s.scenename = 'Good Morning' THEN 1
         WHEN s.scenename = 'Good Night' THEN 1
@@ -230,7 +182,6 @@ SELECT
         ELSE (RANDOM() * 2 + 1)::INTEGER
     END as executioncount,
     
-    -- Успешные выполнения (80-95% от общего)
     CASE 
         WHEN s.scenename = 'Good Morning' THEN 1
         WHEN s.scenename = 'Good Night' THEN 1
@@ -239,13 +190,10 @@ SELECT
         ELSE (RANDOM() * 2)::INTEGER + 1
     END as successfulexecutions,
     
-    -- Неудачные выполнения (редко)
     (RANDOM() * 0.3)::INTEGER as failedexecutions,
     
-    -- Время выполнения
     (RANDOM() * 3000 + 500)::INTEGER as avgexecutiontime_ms,
     
-    -- Количество задействованных устройств
     CASE 
         WHEN s.scenename = 'Good Morning' THEN 3 + (RANDOM() * 2)::INTEGER
         WHEN s.scenename = 'Good Night' THEN 5 + (RANDOM() * 3)::INTEGER
@@ -262,7 +210,6 @@ WHERE
     dd.date >= '2024-01-01' 
     AND dd.date <= '2024-11-30'
     AND u.iscurrent = true
-    -- Время выполнения сценариев зависит от типа
     AND (
         (s.scenename = 'Good Morning' AND dt.hour BETWEEN 6 AND 9)
         OR (s.scenename = 'Good Night' AND dt.hour BETWEEN 21 AND 23)
@@ -270,13 +217,9 @@ WHERE
         OR (s.scenename = 'Away Mode' AND dt.hour BETWEEN 8 AND 18)
         OR (s.scenename IN ('Dinner Time', 'Work Mode', 'Party Mode', 'Energy Saver') AND dt.hour BETWEEN 9 AND 21)
     )
-    AND (RANDOM() > 0.8); -- 20% вероятность выполнения сценария
+    AND (RANDOM() > 0.8);
 
--- ======================================================
--- 8. ПРОВЕРКА РЕЗУЛЬТАТОВ
--- ======================================================
 
--- Показываем статистику по созданным данным
 SELECT 'СТАТИСТИКА СОЗДАННЫХ ДАННЫХ' as info;
 
 SELECT 
@@ -298,10 +241,8 @@ UNION ALL
 SELECT 'fact_scene_execution', COUNT(*), COUNT(*) FROM fact_scene_execution
 ORDER BY table_name;
 
--- Показываем примеры данных для проверки
 SELECT 'ПРИМЕРЫ ДАННЫХ ДЛЯ POWER BI' as info;
 
--- Топ устройств по потреблению энергии
 SELECT 
     d.devicename,
     dt.typename,
@@ -314,7 +255,6 @@ GROUP BY d.devicename, dt.typename
 ORDER BY total_energy DESC
 LIMIT 10;
 
--- Успешность сценариев
 SELECT 
     s.scenename,
     ROUND(AVG(f.successrate), 2) as avg_success_rate,
