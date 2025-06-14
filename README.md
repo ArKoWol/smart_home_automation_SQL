@@ -78,7 +78,6 @@ smart_home_automation_SQL/
 ├── docker-compose.yml
 ├── setup.ps1                         # Windows automation script
 ├── setup.sh                          # Linux/macOS automation script
-├── GENERATE_DIAGRAMS.md               # Schema diagram generation guide
 │
 ├── data/                              # CSV data files (250+ records)
 │   ├── 01_users.csv                   # Customer data (40 records)
@@ -99,11 +98,9 @@ smart_home_automation_SQL/
 │
 ├── schema_diagrams/                   # Schema visualization files
 │   ├── oltp_schema_for_diagram.sql    # OLTP schema for diagram tools
-│   ├── olap_schema_for_diagram.sql    # OLAP schema for diagram tools
-│   └── README_DIAGRAM_GENERATION.md   # Detailed diagram generation guide
+│   └── olap_schema_for_diagram.sql    # OLAP schema for diagram tools
 │
 └── documentation/                     # Reports & documentation
-    ├── Smart_Home_Shop_Documentation.md    # Complete technical docs
     ├── Smart_Home_Shop_Documentation.docx  # Word format documentation
     └── Smart Home Automation Online-Shop.pbix # Power BI dashboard (436KB)
 ```
