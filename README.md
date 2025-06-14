@@ -151,23 +151,4 @@ docker-compose down
 # Complete cleanup
 docker-compose down -v --remove-orphans
 ```
-
-## Schema Diagrams
-
-Generate professional database diagrams in 2 minutes:
-
-1. Open: https://dbdiagram.io/
-2. Copy SQL code from `schema_diagrams/oltp_schema_for_diagram.sql`
-3. Import → From SQL → Paste → Import
-4. Export as PNG/PDF
-
-**Additional Options**: QuickDBD, Draw.io, Mermaid Live Editor  
-**Full Guide**: See `GENERATE_DIAGRAMS.md`
-
-## Project Status
-
-**Version**: 1.0 - Production Ready  
-**Total Tables**: 18 (8 OLTP + 10 OLAP)  
-**Total Records**: 3,500+  
-**SQL Code**: 1,400+ lines  
-**Documentation**: Complete technical specification + Schema diagrams
+mplete technical specification + Schema diagrams
