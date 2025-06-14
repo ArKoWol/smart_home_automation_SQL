@@ -1,0 +1,46 @@
+product_name,product_description,category_name,manufacturer_name,model_number,price,cost,stock_quantity,weight_kg,dimensions_cm,color,warranty_months,energy_rating,connectivity_type,is_active,created_date
+Philips Hue White Bulb,Smart LED bulb with dimming capability,Smart Bulbs,Philips,HUE-W-A19,24.99,12.50,150,0.2,6 x 6 x 11,White,24,A+,WiFi,TRUE,2024-01-10
+Amazon Echo Dot,Smart speaker with Alexa voice assistant,Speakers,Amazon,ECHO-DOT-5,49.99,25.00,200,0.34,10 x 10 x 8.9,Charcoal,12,N/A,WiFi,TRUE,2024-01-10
+Google Nest Thermostat,Smart thermostat with energy saving features,Thermostats,Google,NEST-T3007ES,249.99,125.00,75,0.48,8.4 x 8.4 x 3.2,White,24,Energy Star,WiFi,TRUE,2024-01-10
+Ring Video Doorbell,HD video doorbell with motion detection,Cameras,Ring,RING-VD-4,199.99,100.00,100,0.5,12.8 x 6.2 x 2.8,Bronze,12,N/A,WiFi,TRUE,2024-01-10
+Samsung SmartThings Hub,Central hub for smart home automation,Networking,Samsung,ST-HUB-V3,129.99,65.00,50,0.45,17 x 11.7 x 3.8,White,24,N/A,WiFi/Zigbee,TRUE,2024-01-10
+TP-Link Kasa Smart Switch,WiFi enabled wall switch with scheduling,Smart Switches,TP-Link,HS200,14.99,7.50,300,0.15,4.6 x 3.1 x 1.5,White,24,N/A,WiFi,TRUE,2024-01-10
+Wyze Cam v3,Indoor/outdoor security camera with night vision,Cameras,Wyze,WYZEC3,35.99,18.00,250,0.16,5.5 x 5.5 x 9.4,White,12,N/A,WiFi,TRUE,2024-01-10
+Sonos One SL,Compact smart speaker for music streaming,Speakers,Sonos,ONESLUS1,179.99,90.00,80,1.85,16.2 x 12.0 x 12.0,Black,24,N/A,WiFi,TRUE,2024-01-10
+August Smart Lock Pro,Keyless entry smart lock with auto-unlock,Door Locks,August,AUG-SL03-M02-G03,279.99,140.00,60,1.13,7.4 x 7.4 x 4.5,Silver,12,N/A,WiFi/Bluetooth,TRUE,2024-01-10
+Philips Hue Color Bulb,Color-changing smart LED bulb,Smart Bulbs,Philips,HUE-C-A19,49.99,25.00,120,0.2,6 x 6 x 11,Multi-Color,24,A+,WiFi,TRUE,2024-01-10
+Ecobee SmartThermostat,Voice-enabled smart thermostat with room sensors,Thermostats,Ecobee,EB-STATE6L,249.99,125.00,45,0.64,10.7 x 10.7 x 2.4,Black,36,Energy Star,WiFi,TRUE,2024-01-10
+LG ThinQ Refrigerator,Smart refrigerator with internal cameras,Refrigerators,LG Electronics,LRFXS3106S,2199.99,1100.00,10,136.0,91.1 x 70.9 x 178.4,Stainless Steel,12,Energy Star,WiFi,TRUE,2024-01-10
+Nest Protect Smoke Detector,Smart smoke and carbon monoxide detector,Sensors,Nest Labs,NEST-S3003LWES,119.99,60.00,90,0.38,13.8 x 13.8 x 3.9,White,60,N/A,WiFi,TRUE,2024-01-10
+Yale Assure Lock,Touchscreen smart lock with keypad,Door Locks,Yale,YRD256-ZW2-619,199.99,100.00,70,1.4,7.9 x 14.3 x 6.4,Satin Nickel,12,N/A,Z-Wave,TRUE,2024-01-10
+Honeywell T9 Thermostat,Smart thermostat with remote room sensors,Thermostats,Honeywell,RCHT9610WF,199.99,100.00,85,0.55,10.6 x 10.6 x 2.7,White,60,Energy Star,WiFi,TRUE,2024-01-10
+Amazon Fire TV Stick 4K,4K streaming device with Alexa voice remote,Streaming Devices,Amazon,B08XVYZ1Y5,49.99,25.00,180,0.052,10.8 x 1.4 x 0.9,Black,12,N/A,WiFi,TRUE,2024-01-10
+Kasa Smart Coffee Maker,WiFi-enabled programmable coffee maker,Coffee Makers,Kasa,KM200,89.99,45.00,40,3.2,35.6 x 22.9 x 38.1,Black,12,N/A,WiFi,TRUE,2024-01-10
+Ring Alarm Motion Detector,Wireless motion sensor for home security,Sensors,Ring,4AK1S7-0EN0,29.99,15.00,150,0.12,6.3 x 6.3 x 6.3,White,36,N/A,Z-Wave,TRUE,2024-01-10
+Google Nest Mini,Compact smart speaker with Google Assistant,Speakers,Google,GA00638-US,49.99,25.00,220,0.18,9.8 x 9.8 x 4.2,Chalk,12,N/A,WiFi,TRUE,2024-01-10
+Samsung SmartThings Button,Wireless button for smart home automation,Sensors,Samsung,GP-U999SJVLBAA,19.99,10.00,200,0.02,4.5 x 4.5 x 1.2,White,24,N/A,Zigbee,TRUE,2024-01-10
+LIFX Color Bulb,WiFi smart LED bulb with millions of colors,Smart Bulbs,LIFX,L3A19CL08E26,59.99,30.00,95,0.24,6.2 x 6.2 x 11.5,Multi-Color,24,A+,WiFi,TRUE,2024-01-15
+Bose Home Speaker 500,Premium smart speaker with Alexa and Google,Speakers,Bose,795345-1100,299.99,150.00,40,2.15,20.3 x 17 x 10.9,Black,12,N/A,WiFi/Bluetooth,TRUE,2024-01-15
+Arlo Pro 4 Camera,Wire-free security camera with spotlight,Cameras,Arlo,VMC4041P,199.99,100.00,85,0.52,8.9 x 5.2 x 7.8,White,12,N/A,WiFi,TRUE,2024-01-15
+Schlage Encode Plus,WiFi smart lock with built-in alarm,Door Locks,Schlage,BE489WB CAM 619,329.99,165.00,35,2.8,7.9 x 15.9 x 7.3,Camelot Brass,36,N/A,WiFi,TRUE,2024-01-15
+Roku Ultra 4K,Premium streaming player with voice remote,Streaming Devices,Roku,4802R,99.99,50.00,120,0.37,12.1 x 9.6 x 2.1,Black,12,N/A,WiFi,TRUE,2024-01-15
+Ninja Foodi Smart XL Grill,Indoor grill with smart cooking technology,Kitchen Appliances,Ninja,IG651,329.99,165.00,25,23.6,38.1 x 43.2 x 22.9,Black,12,N/A,WiFi,TRUE,2024-01-20
+Philips Hue Light Strip Plus,Flexible LED light strip with colors,Light Strips,Philips,555326,79.99,40.00,110,0.35,2 x 200 x 0.3,Multi-Color,24,A+,WiFi,TRUE,2024-01-20
+Dyson Pure Cool TP07,Air purifier and fan with app control,Air Quality,Dyson,TP07,549.99,275.00,30,4.65,22 x 22 x 105,White/Silver,24,Energy Star,WiFi,TRUE,2024-01-20
+SimpliSafe Home Security System,Complete wireless security system,Alarm Systems,SimpliSafe,SS3-01,299.99,150.00,45,2.1,Various,White,36,N/A,WiFi/Cellular,TRUE,2024-01-20
+Netgear Nighthawk AX12,WiFi 6 router with ultra-fast speeds,WiFi Routers,Netgear,RAX120,399.99,200.00,55,1.68,31.6 x 23.1 x 6.5,Black,12,N/A,WiFi 6,TRUE,2024-01-20
+Govee Immersion TV Light Strip,TV backlighting with camera sync,Light Strips,Govee,H6199,99.99,50.00,140,0.8,Various,Multi-Color,12,N/A,WiFi,TRUE,2024-01-25
+Tesla Powerwall 2,Home battery storage system,Battery Storage,Tesla,1232100-00-E,11499.99,5750.00,5,122,115 x 75.5 x 15.5,White,120,N/A,WiFi,TRUE,2024-01-25
+Rachio 3 Smart Sprinkler Controller,WiFi irrigation controller,Garden Irrigation,Rachio,8ZULW-C,229.99,115.00,65,0.91,14 x 19.1 x 6.4,White,24,N/A,WiFi,TRUE,2024-01-25
+Bosch 800 Series Dishwasher,Smart dishwasher with Home Connect,Dishwashers,Bosch,SHPM88Z75N,1299.99,650.00,15,52.2,60 x 59.8 x 81.5,Stainless Steel,12,Energy Star,WiFi,TRUE,2024-01-25
+GE Profile Smart Oven,Convection oven with precision cooking,Ovens,GE,PSB9240SFSS,3199.99,1600.00,8,90.7,76.2 x 68.6 x 61,Stainless Steel,12,Energy Star,WiFi,TRUE,2024-01-25
+Panasonic HomeHawk Floor Lamp,Security camera disguised as floor lamp,Cameras,Panasonic,KX-HN7001W,199.99,100.00,50,3.2,30 x 30 x 152,White,24,N/A,WiFi,TRUE,2024-02-01
+Lutron Caseta Smart Dimmer,Wireless dimmer switch,Smart Switches,Lutron,PD-6WCL-WH,49.99,25.00,180,0.2,4.6 x 2.9 x 1.5,White,36,N/A,Lutron Clear Connect,TRUE,2024-02-01
+iRobot Roomba j7+,Self-emptying robot vacuum with AI,Kitchen Appliances,iRobot,j755020,649.99,325.00,35,3.4,33.9 x 33.9 x 8.7,Charcoal,12,N/A,WiFi,TRUE,2024-02-01
+SkyBell HD Video Doorbell,1080p HD video doorbell,Video Doorbells,SkyBell,SH02300BZ,199.99,100.00,75,0.45,12.4 x 6.4 x 2.5,Bronze,12,N/A,WiFi,TRUE,2024-02-01
+Honeywell Home T5+ Thermostat,Smart thermostat with geofencing,Thermostats,Honeywell,RCHT8612WF,149.99,75.00,95,0.4,9.5 x 9.5 x 2.4,White,60,Energy Star,WiFi,TRUE,2024-02-01
+Aprilaire 5000 Air Purifier,Whole-home air purification system,Air Quality,Aprilaire,5000,1299.99,650.00,20,18.1,43.2 x 35.6 x 21.6,White,60,Energy Star,WiFi,TRUE,2024-02-05
+Eero Pro 6E Mesh System,WiFi 6E mesh network system,Mesh Systems,Eero,K010301,399.99,200.00,40,0.55,16 x 16 x 5.8,White,12,N/A,WiFi 6E,TRUE,2024-02-05
+Xbox Series X,Next-generation gaming console,Gaming,Microsoft,RRT-00001,499.99,250.00,60,4.45,15.1 x 15.1 x 30.1,Black,12,N/A,WiFi/Ethernet,TRUE,2024-02-05
+Sonos Arc Soundbar,Premium smart soundbar with Dolby Atmos,Audio Systems,Sonos,ARCG1US1,899.99,450.00,25,6.25,114.2 x 8.7 x 11.5,Black,24,N/A,WiFi,TRUE,2024-02-05
+Instant Vortex Plus Air Fryer,Smart air fryer with app control,Kitchen Appliances,Instant Brands,140-3001-01,129.99,65.00,85,6.8,32.4 x 31.5 x 33,Black,12,N/A,WiFi,TRUE,2024-02-05

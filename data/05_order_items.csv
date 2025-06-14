@@ -1,0 +1,107 @@
+order_id,product_name,quantity,unit_price,total_price
+1,Philips Hue White Bulb,2,24.99,49.98
+1,TP-Link Kasa Smart Switch,1,14.99,14.99
+2,Amazon Echo Dot,1,49.99,49.99
+2,Ring Video Doorbell,1,199.99,199.99
+2,Yale Assure Lock,1,199.99,199.99
+3,Philips Hue Color Bulb,3,49.99,149.97
+3,TP-Link Kasa Smart Switch,2,14.99,29.98
+4,Google Nest Thermostat,1,249.99,249.99
+4,Nest Protect Smoke Detector,1,119.99,119.99
+5,Wyze Cam v3,2,35.99,71.98
+5,Samsung SmartThings Hub,1,129.99,129.99
+6,Sonos One SL,1,179.99,179.99
+6,Amazon Fire TV Stick 4K,1,49.99,49.99
+6,Samsung SmartThings Button,2,19.99,39.98
+7,Ecobee SmartThermostat,1,249.99,249.99
+7,Ring Alarm Motion Detector,2,29.99,59.98
+8,August Smart Lock Pro,1,279.99,279.99
+8,Wyze Cam v3,1,35.99,35.99
+9,LG ThinQ Refrigerator,1,2199.99,2199.99
+10,Kasa Smart Coffee Maker,1,89.99,89.99
+11,Google Nest Mini,2,49.99,99.98
+11,Philips Hue White Bulb,1,24.99,24.99
+12,Honeywell T9 Thermostat,1,199.99,199.99
+12,Samsung SmartThings Hub,1,129.99,129.99
+13,Amazon Echo Dot,1,49.99,49.99
+13,Amazon Fire TV Stick 4K,1,49.99,49.99
+14,Philips Hue Color Bulb,2,49.99,99.98
+15,TP-Link Kasa Smart Switch,3,14.99,44.97
+16,Yale Assure Lock,1,199.99,199.99
+17,Ring Video Doorbell,1,199.99,199.99
+17,Ring Alarm Motion Detector,1,29.99,29.99
+18,Sonos One SL,1,179.99,179.99
+19,Google Nest Thermostat,1,249.99,249.99
+20,Wyze Cam v3,1,35.99,35.99
+21,LG ThinQ Refrigerator,1,2199.99,2199.99
+22,Kasa Smart Coffee Maker,1,89.99,89.99
+23,Ecobee SmartThermostat,1,249.99,249.99
+23,Nest Protect Smoke Detector,1,119.99,119.99
+24,August Smart Lock Pro,1,279.99,279.99
+25,Honeywell T9 Thermostat,1,199.99,199.99
+25,Samsung SmartThings Button,2,19.99,39.98
+26,Google Nest Mini,1,49.99,49.99
+27,Amazon Fire TV Stick 4K,2,49.99,99.98
+28,Philips Hue White Bulb,4,24.99,99.96
+29,TP-Link Kasa Smart Switch,2,14.99,29.98
+30,Ring Video Doorbell,1,199.99,199.99
+31,Samsung SmartThings Hub,1,129.99,129.99
+32,Wyze Cam v3,2,35.99,71.98
+33,Sonos One SL,1,179.99,179.99
+34,Yale Assure Lock,1,199.99,199.99
+35,Ring Alarm Motion Detector,1,29.99,29.99
+36,iRobot Roomba j7+,1,649.99,649.99
+37,Bose Home Speaker 500,1,299.99,299.99
+38,Bosch 800 Series Dishwasher,1,1199.99,1199.99
+39,Sonos Arc Soundbar,1,899.99,899.99
+40,Eero Pro 6E Mesh System,1,399.99,399.99
+41,Arlo Pro 4 Camera,1,199.99,199.99
+42,LIFX Color Bulb,2,59.99,119.98
+42,Govee Immersion TV Light Strip,1,99.99,99.99
+43,Rachio 3 Smart Sprinkler Controller,1,229.99,229.99
+44,Honeywell Home T5+ Thermostat,1,149.99,149.99
+45,Schlage Encode Plus,1,329.99,329.99
+46,Ninja Foodi Smart XL Grill,1,329.99,329.99
+46,Instant Vortex Plus Air Fryer,1,129.99,129.99
+47,Roku Ultra 4K,1,99.99,99.99
+47,Xbox Series X,1,499.99,499.99
+48,Dyson Pure Cool TP07,1,549.99,549.99
+49,Netgear Nighthawk AX12,1,399.99,399.99
+50,Lutron Caseta Smart Dimmer,2,49.99,99.98
+50,Philips Hue Light Strip Plus,1,79.99,79.99
+51,SkyBell HD Video Doorbell,1,199.99,199.99
+51,Samsung SmartThings Button,1,19.99,19.99
+52,Tesla Powerwall 2,1,11499.99,11499.99
+53,Arlo Pro 4 Camera,1,199.99,199.99
+54,Ninja Foodi Smart XL Grill,1,329.99,329.99
+55,iRobot Roomba j7+,1,649.99,649.99
+56,Govee Immersion TV Light Strip,1,99.99,99.99
+56,Philips Hue Light Strip Plus,1,79.99,79.99
+57,Aprilaire 5000 Air Purifier,1,1299.99,1299.99
+58,GE Profile Smart Oven,1,3199.99,3199.99
+59,Eero Pro 6E Mesh System,1,399.99,399.99
+60,Amazon Fire TV Stick 4K,1,49.99,49.99
+60,Google Nest Mini,2,49.99,99.98
+60,Ring Alarm Motion Detector,1,29.99,29.99
+61,Xbox Series X,1,499.99,499.99
+62,Sonos Arc Soundbar,1,899.99,899.99
+63,Philips Hue Light Strip Plus,1,79.99,79.99
+64,Wyze Cam v3,2,35.99,71.98
+64,TP-Link Kasa Smart Switch,1,14.99,14.99
+65,Honeywell Home T5+ Thermostat,1,149.99,149.99
+66,SimpliSafe Home Security System,1,299.99,299.99
+66,Ring Alarm Motion Detector,2,29.99,59.98
+67,Instant Vortex Plus Air Fryer,1,129.99,129.99
+68,Bose Home Speaker 500,1,299.99,299.99
+68,Amazon Echo Dot,1,49.99,49.99
+69,Panasonic HomeHawk Floor Lamp,1,199.99,199.99
+69,Samsung SmartThings Hub,1,129.99,129.99
+70,LIFX Color Bulb,4,59.99,239.98
+71,Dyson Pure Cool TP07,1,549.99,549.99
+72,Netgear Nighthawk AX12,1,399.99,399.99
+73,Rachio 3 Smart Sprinkler Controller,1,229.99,229.99
+74,Schlage Encode Plus,1,329.99,329.99
+75,August Smart Lock Pro,1,279.99,279.99
+76,Google Nest Thermostat,1,249.99,249.99
+76,Nest Protect Smoke Detector,1,119.99,119.99
+77,Roku Ultra 4K,1,99.99,99.99

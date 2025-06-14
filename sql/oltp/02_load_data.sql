@@ -1,88 +1,188 @@
 
+DROP TABLE IF EXISTS temp_users CASCADE;
+DROP TABLE IF EXISTS temp_categories CASCADE;
+DROP TABLE IF EXISTS temp_products CASCADE;
+DROP TABLE IF EXISTS temp_orders CASCADE;
+DROP TABLE IF EXISTS temp_order_items CASCADE;
+
+\echo 'Starting data loading process...'
+
+\echo 'Connected to OLTP database.'
+
 CREATE TEMP TABLE temp_users (
-    UserID INT,
-    Name VARCHAR(100),
-    Email VARCHAR(100),
-    Password VARCHAR(255)
+    email VARCHAR(255),
+    password_hash VARCHAR(255),
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    phone VARCHAR(20),
+    address_line1 VARCHAR(255),
+    address_line2 VARCHAR(255),
+    city VARCHAR(100),
+    state VARCHAR(100),
+    postal_code VARCHAR(20),
+    country VARCHAR(100),
+    date_registered DATE,
+    is_active BOOLEAN,
+    last_login TIMESTAMP
 );
 
-\COPY temp_users FROM '/data/users.csv' WITH CSV HEADER DELIMITER ';';
-
-INSERT INTO Users (UserID, Name, Email, Password)
-SELECT UserID, Name, Email, Password FROM temp_users
-ON CONFLICT (Email) DO NOTHING;
-
-DROP TABLE temp_users;
-
-CREATE TEMP TABLE temp_device_types (
-    DeviceTypeID INT,
-    TypeName VARCHAR(100),
-    Description TEXT
+CREATE TEMP TABLE temp_categories (
+    category_name VARCHAR(100),
+    description TEXT,
+    parent_category_name VARCHAR(100),
+    is_active BOOLEAN,
+    created_date DATE
 );
 
-\COPY temp_device_types FROM '/data/device_types.csv' WITH CSV HEADER DELIMITER ';';
-
-INSERT INTO DeviceTypes (DeviceTypeID, TypeName, Description)
-SELECT DeviceTypeID, TypeName, Description FROM temp_device_types
-ON CONFLICT (DeviceTypeID) DO NOTHING;
-
-DROP TABLE temp_device_types;
-
-CREATE TEMP TABLE temp_rooms (
-    RoomID INT,
-    UserID INT,
-    RoomName VARCHAR(100)
+CREATE TEMP TABLE temp_products (
+    product_name VARCHAR(255),
+    product_description TEXT,
+    category_name VARCHAR(100),
+    manufacturer_name VARCHAR(255),
+    model_number VARCHAR(100),
+    price DECIMAL(10,2),
+    cost DECIMAL(10,2),
+    stock_quantity INTEGER,
+    weight_kg DECIMAL(8,2),
+    dimensions_cm VARCHAR(50),
+    color VARCHAR(50),
+    warranty_months INTEGER,
+    energy_rating VARCHAR(20),
+    connectivity_type VARCHAR(100),
+    is_active BOOLEAN,
+    created_date DATE
 );
 
-\COPY temp_rooms FROM '/data/rooms.csv' WITH CSV HEADER DELIMITER ';';
-
-INSERT INTO Rooms (RoomID, UserID, RoomName)
-SELECT RoomID, UserID, RoomName FROM temp_rooms
-ON CONFLICT (RoomID) DO NOTHING;
-
-DROP TABLE temp_rooms;
-
-CREATE TEMP TABLE temp_devices (
-    DeviceID INT,
-    RoomID INT,
-    DeviceTypeID INT,
-    DeviceName VARCHAR(100),
-    Manufacturer VARCHAR(100)
+CREATE TEMP TABLE temp_orders (
+    user_email VARCHAR(255),
+    order_date TIMESTAMP,
+    order_status VARCHAR(50),
+    shipping_address_line1 VARCHAR(255),
+    shipping_city VARCHAR(100),
+    shipping_state VARCHAR(100),
+    shipping_postal_code VARCHAR(20),
+    shipping_country VARCHAR(100),
+    subtotal DECIMAL(10,2),
+    tax_amount DECIMAL(10,2),
+    shipping_cost DECIMAL(10,2),
+    total_amount DECIMAL(10,2),
+    tracking_number VARCHAR(100),
+    shipped_date TIMESTAMP,
+    delivered_date TIMESTAMP
 );
 
-\COPY temp_devices FROM '/data/devices.csv' WITH CSV HEADER DELIMITER ';';
-
-INSERT INTO Devices (DeviceID, RoomID, DeviceTypeID, DeviceName, Manufacturer)
-SELECT DeviceID, RoomID, DeviceTypeID, DeviceName, Manufacturer FROM temp_devices
-ON CONFLICT (DeviceID) DO NOTHING;
-
-DROP TABLE temp_devices;
-
-CREATE TEMP TABLE temp_scenes (
-    SceneID INT,
-    UserID INT,
-    SceneName VARCHAR(100),
-    Description TEXT
+CREATE TEMP TABLE temp_order_items (
+    order_id INTEGER,
+    product_name VARCHAR(255),
+    quantity INTEGER,
+    unit_price DECIMAL(10,2),
+    total_price DECIMAL(10,2)
 );
 
-\COPY temp_scenes FROM '/data/scenes.csv' WITH CSV HEADER DELIMITER ';';
+\echo 'Temporary tables created.'
 
-INSERT INTO Scenes (SceneID, UserID, SceneName, Description)
-SELECT SceneID, UserID, SceneName, Description FROM temp_scenes
-ON CONFLICT (SceneID) DO NOTHING;
+\echo 'Loading CSV data into temporary tables...'
 
-DROP TABLE temp_scenes;
+\copy temp_users FROM '/data/01_users.csv' WITH CSV HEADER;
+\copy temp_categories FROM '/data/02_categories.csv' WITH CSV HEADER;
+\copy temp_products FROM '/data/03_products.csv' WITH CSV HEADER;
+\copy temp_orders FROM '/data/04_orders.csv' WITH CSV HEADER;
+\copy temp_order_items FROM '/data/05_order_items.csv' WITH CSV HEADER;
 
-CREATE TEMP TABLE temp_scene_devices (
-    SceneID INT,
-    DeviceID INT,
-    DesiredStatus VARCHAR(100)
+\echo 'CSV data loaded into temporary tables.'
+
+INSERT INTO users (email, password_hash, first_name, last_name, phone,
+                  address_line1, address_line2, city, state, postal_code,
+                  country, date_registered, is_active, last_login)
+SELECT email, password_hash, first_name, last_name, phone,
+       address_line1, address_line2, city, state, postal_code,
+       country, date_registered, is_active, last_login
+FROM temp_users t
+WHERE NOT EXISTS (
+    SELECT 1 FROM users u WHERE u.email = t.email
+)
+ON CONFLICT (email) DO NOTHING;
+
+\echo 'Users data inserted.'
+
+INSERT INTO categories (category_name, description, parent_category_id, is_active, created_date)
+SELECT category_name, description, NULL, is_active, created_date
+FROM temp_categories t
+WHERE parent_category_name IS NULL 
+   OR parent_category_name = ''
+   AND NOT EXISTS (
+    SELECT 1 FROM categories c WHERE c.category_name = t.category_name
+)
+ON CONFLICT (category_name) DO NOTHING;
+
+INSERT INTO categories (category_name, description, parent_category_id, is_active, created_date)
+SELECT t.category_name, t.description, p.category_id, t.is_active, t.created_date
+FROM temp_categories t
+JOIN categories p ON p.category_name = t.parent_category_name
+WHERE t.parent_category_name IS NOT NULL 
+   AND t.parent_category_name != ''
+   AND NOT EXISTS (
+    SELECT 1 FROM categories c WHERE c.category_name = t.category_name
+)
+ON CONFLICT (category_name) DO NOTHING;
+
+\echo 'Categories data inserted.'
+
+INSERT INTO products (product_name, product_description, category_id, manufacturer_name,
+                     model_number, price, cost, stock_quantity, weight_kg, dimensions_cm,
+                     color, warranty_months, energy_rating, connectivity_type, is_active, created_date)
+SELECT t.product_name, t.product_description, c.category_id, t.manufacturer_name,
+       t.model_number, t.price, t.cost, t.stock_quantity, t.weight_kg, t.dimensions_cm,
+       t.color, t.warranty_months, t.energy_rating, t.connectivity_type, t.is_active, t.created_date
+FROM temp_products t
+JOIN categories c ON c.category_name = t.category_name
+WHERE NOT EXISTS (
+    SELECT 1 FROM products p WHERE p.product_name = t.product_name AND p.model_number = t.model_number
 );
 
-\COPY temp_scene_devices FROM '/data/scene_devices.csv' WITH CSV HEADER DELIMITER ';';
+\echo 'Products data inserted.'
 
-INSERT INTO SceneDevices (SceneID, DeviceID, DesiredStatus)
-SELECT SceneID, DeviceID, DesiredStatus FROM temp_scene_devices
-ON CONFLICT (SceneID, DeviceID) DO NOTHING;
+INSERT INTO orders (user_id, order_date, order_status, shipping_address_line1,
+                   shipping_city, shipping_state, shipping_postal_code, shipping_country,
+                   subtotal, tax_amount, shipping_cost, total_amount, tracking_number, 
+                   shipped_date, delivered_date)
+SELECT u.user_id, t.order_date, t.order_status, t.shipping_address_line1,
+       t.shipping_city, t.shipping_state, t.shipping_postal_code, t.shipping_country,
+       t.subtotal, t.tax_amount, t.shipping_cost, t.total_amount, t.tracking_number, 
+       t.shipped_date, t.delivered_date
+FROM temp_orders t
+JOIN users u ON u.email = t.user_email
+WHERE NOT EXISTS (
+    SELECT 1 FROM orders o 
+    WHERE o.user_id = u.user_id 
+      AND o.order_date = t.order_date 
+      AND o.total_amount = t.total_amount
+);
 
-DROP TABLE temp_scene_devices; 
+\echo 'Orders data inserted.'
+
+INSERT INTO order_items (order_id, product_id, quantity, unit_price, total_price)
+SELECT t.order_id, p.product_id, t.quantity, t.unit_price, t.total_price
+FROM temp_order_items t
+JOIN products p ON p.product_name = t.product_name
+WHERE EXISTS (SELECT 1 FROM orders o WHERE o.order_id = t.order_id)
+AND NOT EXISTS (
+    SELECT 1 FROM order_items oi 
+    WHERE oi.order_id = t.order_id AND oi.product_id = p.product_id
+)
+ON CONFLICT (order_id, product_id) DO NOTHING;
+
+\echo 'Order items data inserted.'
+
+\echo 'Data loading completed. Summary:'
+SELECT 'Users' as table_name, COUNT(*) as record_count FROM users
+UNION ALL
+SELECT 'Categories', COUNT(*) FROM categories
+UNION ALL
+SELECT 'Products', COUNT(*) FROM products
+UNION ALL
+SELECT 'Orders', COUNT(*) FROM orders
+UNION ALL
+SELECT 'Order Items', COUNT(*) FROM order_items;
+
+\echo 'OLTP data loading process completed successfully!' 

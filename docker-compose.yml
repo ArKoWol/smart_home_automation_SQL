@@ -1,35 +1,44 @@
-version: '3.8'
-
 services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: smart_home_db
+  smart_home_shop_oltp:
+    image: postgres:15
+    container_name: smart_home_shop_oltp
     environment:
-      POSTGRES_DB: smart_home
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: smart_home_shop_oltp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - oltp_data:/var/lib/postgresql/data
+      - ./sql/oltp:/docker-entrypoint-initdb.d
+      - ./data:/data
+    networks:
+      - smart_home_network
+
+  smart_home_shop_olap:
+    image: postgres:15
+    container_name: smart_home_shop_olap
+    environment:
+      POSTGRES_DB: smart_home_shop_olap
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5433:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init:/docker-entrypoint-initdb.d
-      - ./data:/data
-    restart: unless-stopped
-
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: smart_home_pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin123
-    ports:
-      - "8080:80"
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
+      - olap_data:/var/lib/postgresql/data
+      - ./sql/olap:/docker-entrypoint-initdb.d
+      - ./data:/csv-data
+    networks:
+      - smart_home_network
     depends_on:
-      - postgres
-    restart: unless-stopped
+      - smart_home_shop_oltp
 
 volumes:
-  postgres_data:
-  pgadmin_data: 
+  oltp_data:
+    driver: local
+  olap_data:
+    driver: local
+
+networks:
+  smart_home_network:
+    driver: bridge 

@@ -1,0 +1,41 @@
+category_name,description,parent_category_name,is_active,created_date
+Smart Home,All smart home automation devices and accessories,,TRUE,2024-01-01
+Lighting,Smart lighting solutions and fixtures,Smart Home,TRUE,2024-01-01
+Security,Home security and surveillance systems,Smart Home,TRUE,2024-01-01
+Climate Control,Heating and cooling automation systems,Smart Home,TRUE,2024-01-01
+Entertainment,Audio and video entertainment systems,Smart Home,TRUE,2024-01-01
+Kitchen Appliances,Smart kitchen devices and appliances,Smart Home,TRUE,2024-01-01
+Energy Management,Power monitoring and energy saving devices,Smart Home,TRUE,2024-01-01
+Networking,Network infrastructure and connectivity devices,Smart Home,TRUE,2024-01-01
+Smart Bulbs,LED and smart bulbs,Lighting,TRUE,2024-01-01
+Smart Switches,Wall switches and dimmers,Lighting,TRUE,2024-01-01
+Smart Fixtures,Ceiling fans and light fixtures,Lighting,TRUE,2024-01-01
+Cameras,Security cameras and surveillance,Security,TRUE,2024-01-01
+Door Locks,Smart locks and access control,Security,TRUE,2024-01-01
+Sensors,Motion sensors and detectors,Security,TRUE,2024-01-01
+Thermostats,Smart thermostats and controllers,Climate Control,TRUE,2024-01-01
+HVAC Systems,Heating and cooling systems,Climate Control,TRUE,2024-01-01
+Speakers,Smart speakers and sound systems,Entertainment,TRUE,2024-01-01
+Streaming Devices,Media players and streaming boxes,Entertainment,TRUE,2024-01-01
+Refrigerators,Smart refrigerators and coolers,Kitchen Appliances,TRUE,2024-01-01
+Coffee Makers,Smart coffee machines and brewers,Kitchen Appliances,TRUE,2024-01-01
+Outdoor Lighting,Garden and exterior lighting systems,Lighting,TRUE,2024-01-01
+Light Strips,LED strips and ambient lighting,Lighting,TRUE,2024-01-01
+Alarm Systems,Complete security alarm solutions,Security,TRUE,2024-01-01
+Video Doorbells,Smart doorbell cameras,Security,TRUE,2024-01-01
+Air Quality,Air purifiers and quality monitors,Climate Control,TRUE,2024-01-01
+Smart Vents,Automated air vents and dampers,Climate Control,TRUE,2024-01-01
+Gaming,Gaming consoles and accessories,Entertainment,TRUE,2024-01-01
+Audio Systems,Hi-fi and surround sound systems,Entertainment,TRUE,2024-01-01
+Dishwashers,Smart dishwashing appliances,Kitchen Appliances,TRUE,2024-01-01
+Ovens,Smart ovens and cooking appliances,Kitchen Appliances,TRUE,2024-01-01
+Microwaves,Smart microwave ovens,Kitchen Appliances,TRUE,2024-01-01
+Water Heaters,Smart water heating systems,Kitchen Appliances,TRUE,2024-01-01
+Solar Panels,Solar energy systems and panels,Energy Management,TRUE,2024-01-01
+Smart Meters,Energy consumption monitoring,Energy Management,TRUE,2024-01-01
+Battery Storage,Home energy storage solutions,Energy Management,TRUE,2024-01-01
+WiFi Routers,Wireless network routers,Networking,TRUE,2024-01-01
+Range Extenders,WiFi signal boosters,Networking,TRUE,2024-01-01
+Mesh Systems,Whole-home WiFi mesh networks,Networking,TRUE,2024-01-01
+Garden Irrigation,Smart watering and irrigation,Energy Management,TRUE,2024-01-01
+Pool Automation,Smart pool control systems,Energy Management,TRUE,2024-01-01
