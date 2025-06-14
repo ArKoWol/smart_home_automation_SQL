@@ -117,6 +117,19 @@ CREATE TABLE payments (
     notes TEXT
 );
 
+CREATE TABLE order_status_history (
+    history_id SERIAL PRIMARY KEY,
+    order_id INTEGER NOT NULL REFERENCES orders(order_id) ON DELETE CASCADE,
+    old_status VARCHAR(50),
+    new_status VARCHAR(50) NOT NULL,
+    status_changed_by VARCHAR(100) DEFAULT 'system',
+    status_change_reason TEXT,
+    change_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estimated_completion_date TIMESTAMP,
+    actual_completion_date TIMESTAMP,
+    notes TEXT
+);
+
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_users_last_login ON users(last_login);
 CREATE INDEX idx_products_category ON products(category_id);
@@ -131,6 +144,9 @@ CREATE INDEX idx_order_items_product ON order_items(product_id);
 CREATE INDEX idx_shopping_cart_user ON shopping_cart(user_id);
 CREATE INDEX idx_payments_order ON payments(order_id);
 CREATE INDEX idx_payments_status ON payments(payment_status);
+CREATE INDEX idx_order_status_history_order ON order_status_history(order_id);
+CREATE INDEX idx_order_status_history_timestamp ON order_status_history(change_timestamp);
+CREATE INDEX idx_order_status_history_status ON order_status_history(new_status);
 
 ALTER TABLE order_items ADD CONSTRAINT check_total_price 
     CHECK (total_price = quantity * unit_price);

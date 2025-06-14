@@ -16,7 +16,7 @@ Comprehensive database solution for smart home automation e-commerce platform fe
 ## System Architecture
 
 ### OLTP Database (Port 5434)
-- **7 Normalized Tables** in Third Normal Form (3NF)
+- **8 Normalized Tables** in Third Normal Form (3NF)
 - **500+ Operational Records** supporting real-time transactions
 
 | Table | Records | Purpose |
@@ -28,6 +28,7 @@ Comprehensive database solution for smart home automation e-commerce platform fe
 | `order_items` | 100+ | Order line items and quantities |
 | `shopping_cart` | Active | Real-time cart management |
 | `payments` | 70+ | Financial transaction processing |
+| `order_status_history` | 200+ | Order status change tracking |
 
 ### OLAP Database (Port 5433)
 - **Snowflake Schema** with 10 dimensional and fact tables
@@ -77,6 +78,7 @@ smart_home_automation_SQL/
 ├── docker-compose.yml
 ├── setup.ps1                         # Windows automation script
 ├── setup.sh                          # Linux/macOS automation script
+├── GENERATE_DIAGRAMS.md               # Schema diagram generation guide
 │
 ├── data/                              # CSV data files (250+ records)
 │   ├── 01_users.csv                   # Customer data (40 records)
@@ -87,13 +89,18 @@ smart_home_automation_SQL/
 │
 ├── sql/                               # Database scripts
 │   ├── oltp/                          # Operational database
-│   │   ├── 01_create_tables.sql       # OLTP schema (138 lines)
-│   │   └── 02_load_data.sql           # Data loading (188 lines)
+│   │   ├── 01_create_tables.sql       # OLTP schema (8 tables)
+│   │   └── 02_load_data.sql           # Data loading with status history
 │   ├── olap/                          # Analytics database
-│   │   ├── 01_create_tables.sql       # OLAP schema (218 lines)
+│   │   ├── 01_create_tables.sql       # OLAP schema (10 tables)
 │   │   └── 02_etl_process.sql         # ETL pipeline (422 lines)
-│   ├── 03_oltp_queries.sql            # Operational analytics (198 lines)
-│   └── 04_olap_queries.sql            # Strategic analytics (315 lines)
+│   ├── 03_oltp_queries.sql            # Operational analytics (7 queries)
+│   └── 04_olap_queries.sql            # Strategic analytics (7 queries)
+│
+├── schema_diagrams/                   # Schema visualization files
+│   ├── oltp_schema_for_diagram.sql    # OLTP schema for diagram tools
+│   ├── olap_schema_for_diagram.sql    # OLAP schema for diagram tools
+│   └── README_DIAGRAM_GENERATION.md   # Detailed diagram generation guide
 │
 └── documentation/                     # Reports & documentation
     ├── Smart_Home_Shop_Documentation.md    # Complete technical docs
@@ -167,10 +174,22 @@ docker-compose down
 docker-compose down -v --remove-orphans
 ```
 
+## Schema Diagrams
+
+Generate professional database diagrams in 2 minutes:
+
+1. Open: https://dbdiagram.io/
+2. Copy SQL code from `schema_diagrams/oltp_schema_for_diagram.sql`
+3. Import → From SQL → Paste → Import
+4. Export as PNG/PDF
+
+**Additional Options**: QuickDBD, Draw.io, Mermaid Live Editor  
+**Full Guide**: See `GENERATE_DIAGRAMS.md`
+
 ## Project Status
 
 **Version**: 1.0 - Production Ready  
-**Total Tables**: 17 (7 OLTP + 10 OLAP)  
+**Total Tables**: 18 (8 OLTP + 10 OLAP)  
 **Total Records**: 3,500+  
-**SQL Code**: 1,300+ lines  
-**Documentation**: Complete technical specification
+**SQL Code**: 1,400+ lines  
+**Documentation**: Complete technical specification + Schema diagrams

@@ -174,6 +174,61 @@ ON CONFLICT (order_id, product_id) DO NOTHING;
 
 \echo 'Order items data inserted.'
 
+-- Generate order status history from existing orders
+INSERT INTO order_status_history (order_id, old_status, new_status, status_change_reason, 
+                                change_timestamp, estimated_completion_date, actual_completion_date)
+SELECT 
+    o.order_id,
+    'new' as old_status,
+    'pending' as new_status,
+    'Order created' as status_change_reason,
+    o.order_date as change_timestamp,
+    o.order_date + INTERVAL '3 days' as estimated_completion_date,
+    NULL as actual_completion_date
+FROM orders o
+WHERE NOT EXISTS (
+    SELECT 1 FROM order_status_history osh 
+    WHERE osh.order_id = o.order_id AND osh.new_status = 'pending'
+);
+
+-- Add status changes for shipped orders
+INSERT INTO order_status_history (order_id, old_status, new_status, status_change_reason, 
+                                change_timestamp, estimated_completion_date, actual_completion_date)
+SELECT 
+    o.order_id,
+    'pending' as old_status,
+    'shipped' as new_status,
+    'Order shipped to customer' as status_change_reason,
+    o.shipped_date as change_timestamp,
+    o.shipped_date + INTERVAL '2 days' as estimated_completion_date,
+    o.shipped_date as actual_completion_date
+FROM orders o
+WHERE o.shipped_date IS NOT NULL
+AND NOT EXISTS (
+    SELECT 1 FROM order_status_history osh 
+    WHERE osh.order_id = o.order_id AND osh.new_status = 'shipped'
+);
+
+-- Add status changes for delivered orders
+INSERT INTO order_status_history (order_id, old_status, new_status, status_change_reason, 
+                                change_timestamp, estimated_completion_date, actual_completion_date)
+SELECT 
+    o.order_id,
+    'shipped' as old_status,
+    'delivered' as new_status,
+    'Order delivered successfully' as status_change_reason,
+    o.delivered_date as change_timestamp,
+    o.delivered_date as estimated_completion_date,
+    o.delivered_date as actual_completion_date
+FROM orders o
+WHERE o.delivered_date IS NOT NULL
+AND NOT EXISTS (
+    SELECT 1 FROM order_status_history osh 
+    WHERE osh.order_id = o.order_id AND osh.new_status = 'delivered'
+);
+
+\echo 'Order status history data generated.'
+
 \echo 'Data loading completed. Summary:'
 SELECT 'Users' as table_name, COUNT(*) as record_count FROM users
 UNION ALL
@@ -183,6 +238,12 @@ SELECT 'Products', COUNT(*) FROM products
 UNION ALL
 SELECT 'Orders', COUNT(*) FROM orders
 UNION ALL
-SELECT 'Order Items', COUNT(*) FROM order_items;
+SELECT 'Order Items', COUNT(*) FROM order_items
+UNION ALL
+SELECT 'Shopping Cart', COUNT(*) FROM shopping_cart
+UNION ALL
+SELECT 'Payments', COUNT(*) FROM payments
+UNION ALL
+SELECT 'Order Status History', COUNT(*) FROM order_status_history;
 
 \echo 'OLTP data loading process completed successfully!' 
