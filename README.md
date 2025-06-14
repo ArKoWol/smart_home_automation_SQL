@@ -105,25 +105,6 @@ smart_home_automation_SQL/
     └── Smart Home Automation Online-Shop.pbix # Power BI dashboard (436KB)
 ```
 
-## Business Intelligence
-
-### Power BI Dashboard
-**File**: `documentation/Smart Home Automation Online-Shop.pbix`
-
-**Key Performance Indicators**:
-- **Total Revenue**: $50,000+ from smart home sales
-- **Active Customers**: 40+ across major US regions  
-- **Average Order Value**: $600-800 per transaction
-- **Product Portfolio**: 45+ devices from 20+ manufacturers
-
-**Interactive Visualizations**:
-1. Revenue Trend Analysis - Monthly growth patterns
-2. Geographic Sales Map - US regional performance
-3. Top Products Ranking - Best-sellers by revenue
-4. Customer Segmentation - VIP/Regular/New customer analysis  
-5. Category Performance Matrix - Product line optimization
-6. Inventory Health Dashboard - Stock levels and alerts
-
 ### SQL Analytics
 - **14 Advanced Queries** (7 OLTP + 7 OLAP)
 - **Multi-dimensional Analysis** across time, geography, products, customers
